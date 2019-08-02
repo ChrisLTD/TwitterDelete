@@ -7,6 +7,9 @@ MAX_TWEETS_PER_PAGE = 200.0
 MAX_TWEETS_PER_REQUEST = 100
 MAX_LIKES_PER_PAGE = 100.0
 
+# Keep specific tweet IDs (comma seperated list)
+KEEP_THESE = [111111111111111111,222222222222222222]
+
 require "dotenv"
 Dotenv.load
 
@@ -15,10 +18,10 @@ require "optimist"
   opt :force, "Actually delete/unlike/unretweet tweets", type: :boolean, default: false
   opt :user, "The Twitter username to purge", type: :string, default: ENV["TWITTER_USER"]
   opt :archive, "Twitter archive tweet.js file", type: :string
-  opt :days, "Keep tweets/likes under this many days old", default: 28
+  opt :days, "Keep tweets/likes under this many days old", default: 365
   opt :olds, "Keep tweets/likes more than this many days old", default: 9999
-  opt :rts, "Keep tweet with this many retweets", default: 5
-  opt :favs, "Keep tweets with this many likes", default: 5
+  opt :rts, "Keep tweet with this many retweets", default: 2
+  opt :favs, "Keep tweets with this many likes", default: 2
 end
 
 Optimist.die :user, "must be set" if @options[:user].to_s.empty?
@@ -60,6 +63,11 @@ def too_new_or_popular?(tweet)
 
   if tweet.favorite_count >= @options[:favs]
     puts "Ignoring tweet: too liked: #{tweet.text}"
+    return true
+  end
+  
+  if KEEP_THESE.include?(tweet.id) then
+    puts "Ignored a tweet that is to be saved forever: #{tweet.text}"
     return true
   end
 
