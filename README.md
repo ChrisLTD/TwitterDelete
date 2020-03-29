@@ -22,9 +22,14 @@ TWITTER_ACCESS_TOKEN=...
 TWITTER_ACCESS_TOKEN_SECRET=...
 ```
 
-Now run TwitterDelete:
+Now run TwitterDelete dry run:
 ```bash
 ./twitter_delete.rb --user TwitterUsername
+```
+
+Now run TwitterDelete for real:
+```bash
+./twitter_delete.rb --user TwitterUsername --force
 ```
 
 ## Status
