@@ -18,7 +18,7 @@ require "optimist"
   opt :force, "Actually delete/unlike/unretweet tweets", type: :boolean, default: false
   opt :user, "The Twitter username to purge", type: :string, default: ENV["TWITTER_USER"]
   opt :archive, "Twitter archive tweet.js file", type: :string
-  opt :days, "Keep tweets/likes under this many days old", default: 250
+  opt :days, "Keep tweets/likes under this many days old", default: 180
   opt :olds, "Keep tweets/likes more than this many days old", default: 9999
   opt :rts, "Keep tweet with this many retweets", default: 2
   opt :favs, "Keep tweets with this many likes", default: 2
